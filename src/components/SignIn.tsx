@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { FaUser, FaSignInAlt, FaEyeSlash } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 
-import { TSignUpSchema, signUpSchema } from "../types/formtypes";
+import { TSignInSchema, signInSchema } from "../types/formtypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 
@@ -13,11 +13,11 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<TSignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<TSignInSchema>({
+    resolver: zodResolver(signInSchema),
   });
 
-  const onSubmit = async (data: TSignUpSchema) => {
+  const onSubmit = async (data: TSignInSchema) => {
     // TODO: submit to server
     // ...
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -66,7 +66,7 @@ const SignIn = () => {
         )}
         <div className="flex gap-1 w-64 justify-between">
           <div className=" flex gap-1">
-            <input type="checkbox" name="checkbox" />
+            <input {...register("checkbox")} type="checkbox" name="checkbox" />
             <label htmlFor="checkbox" className="text-sm text-gray-400">
               remenber me?
             </label>
@@ -75,19 +75,19 @@ const SignIn = () => {
             forgot password?
           </a>
         </div>
+        <div className="flex justify-between items-center mb-4 mt-8">
+          <button
+            disabled={isSubmitting}
+            type="submit"
+            className="flex gap-1 justify-center items-center text-white py-2 px-6 bg-indigo-500 rounded-md text-sm  disabled:bg-gray-500"
+          >
+            Login <FaArrowRight />
+          </button>
+          <Link to="/" className="text-indigo-500 text-sm font-semibold">
+            Create account!
+          </Link>
+        </div>
       </form>
-      <div className="flex justify-between items-center mb-4 mt-8">
-        <button
-          disabled={isSubmitting}
-          type="submit"
-          className="flex gap-1 justify-center items-center text-white py-2 px-6 bg-indigo-500 rounded-md text-sm  disabled:bg-gray-500"
-        >
-          Login <FaArrowRight />
-        </button>
-        <Link to="/" className="text-indigo-500 text-sm font-semibold">
-          Create account!
-        </Link>
-      </div>
     </div>
   );
 };
